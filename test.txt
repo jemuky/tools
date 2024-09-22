@@ -1,0 +1,4 @@
+# Gboard Dictionary version:1
+abagaqiweidangxiao	阿巴嘎旗委党校	zh-CN
+abagaqixingzhengganbuxuexiao	阿巴嘎旗行政干部学校	zh-CN
+nver    女儿    zh-CN
