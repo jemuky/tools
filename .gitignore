@@ -1,2 +1,7 @@
-bin
-obj
+
+# gboard-quanpintoshuangpin
+gboard-quanpintoshuangpin/Debug
+gboard-quanpintoshuangpin/obj
+
+# keyboard_listener
+keyboard_listener/build

@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.13.3)
+# 项目信息
+project (keyboard_listener LANGUAGES C CXX VERSION 0.0.1)
+# 指定cpp版本
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
+
+add_compile_options(/utf-8 /MT)
+
+add_executable(${PROJECT_NAME} main.cpp)  
+
