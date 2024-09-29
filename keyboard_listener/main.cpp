@@ -74,7 +74,6 @@ int main(int argc, char **argv) {
   std::cout << std::endl;
 
   signal(SIGINT, clean);
-  signal(SIGTERM, clean);
   atexit(clean);
 
   kl->KeyDown();
