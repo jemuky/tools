@@ -1,3 +1,4 @@
+chcp 65001
 @echo off
 
 set BUILD_DIR=build
@@ -26,5 +27,5 @@ cd ..
 
 echo.
 
-%BUILD_DIR%\Release\keyboard_listener.exe
-echo.
+@REM %BUILD_DIR%\Release\keyboard_listener.exe 0x78 0x11 0x77
+@REM echo.

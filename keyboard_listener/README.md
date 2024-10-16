@@ -4,5 +4,14 @@
 按下`F9`时触发`Right Ctrl`，不弹起；等按下`F8`或`ctrl + c`或`ESC`或关闭程序时释放按键  
 
 # 用法
-需安装cmake和win cpp环境，暂时不能更改按键，直接执行  
-`./start.bat`  
+需安装cmake和win cpp环境，暂时不能更改按键，编译  
+`./comp.bat`  
+
+执行参数: 
+> 参见 um/WinUser.h 定义的 VK_ 开头的按键码，  
+> 如 当按下 F9(VK_F9 0x78) 时，持续按下 Ctrl(VK_Control 0x11)，按下F8(VK_F8 0x77)或程序关闭时，弹起 Ctrl  
+> 以下按键都可以用十进制、八进制、16进制传  
+> 参数1: 启动触发按键: 启动后持续按下参数2  
+> 参数2: 持续触发按键  
+> 参数3: 反启动触发按键: 弹起参数2  
+> 执行: `keyboard_listener.exe 0x78 0x11 0x77`
