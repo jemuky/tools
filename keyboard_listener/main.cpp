@@ -9,28 +9,28 @@ struct KeyboarListener;
 
 KeyboarListener *g_kl = nullptr;
 
-LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK keyboard_proc(int nCode, WPARAM wParam, LPARAM lParam);
 
 struct KeyboarListener {
   int start_key_, control_key_, end_key_;
-  HHOOK hhkLowLevelKeyboard;
+  HHOOK hhk_low_level_keyboard;
 
   KeyboarListener(int start_key, int control_key, int end_key)
       : start_key_(start_key), control_key_(control_key), end_key_(end_key) {
-    hhkLowLevelKeyboard =
-        SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, NULL, 0);
-    if (hhkLowLevelKeyboard == NULL) {
+    hhk_low_level_keyboard =
+        SetWindowsHookEx(WH_KEYBOARD_LL, keyboard_proc, NULL, 0);
+    if (hhk_low_level_keyboard == NULL) {
       std::cerr << "Failed to install hook!" << std::endl;
       return;
     }
   }
   ~KeyboarListener() {
     std::cout << "deconstructor" << std::endl;
-    KeyUp();
-    UnhookWindowsHookEx(hhkLowLevelKeyboard);
+    key_up();
+    UnhookWindowsHookEx(hhk_low_level_keyboard);
   }
 
-  void KeyDown() {
+  void key_down() {
     while (true) {
       MSG msg;
       while (GetMessage(&msg, NULL, 0, 0)) {
@@ -39,10 +39,10 @@ struct KeyboarListener {
       }
     }
   }
-  void KeyUp() { keybd_event(control_key_, 0, KEYEVENTF_KEYUP, 0); }
+  void key_up() { keybd_event(control_key_, 0, KEYEVENTF_KEYUP, 0); }
 };
 
-LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK keyboard_proc(int nCode, WPARAM wParam, LPARAM lParam) {
   if (nCode == HC_ACTION) {
     KBDLLHOOKSTRUCT *pKeyboard = (KBDLLHOOKSTRUCT *)lParam;
 
@@ -111,6 +111,6 @@ int main(int argc, char **argv) {
   signal(SIGINT, clean);
   atexit(clean);
 
-  g_kl->KeyDown();
+  g_kl->key_down();
   return 0;
 }

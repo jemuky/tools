@@ -6,4 +6,4 @@ if %ERRORLEVEL% neq 0 (
     exit /b
 )
 
-bin\Debug\net8.0\gboard-quanpintoshuangpin.exe -i "test.txt" -o "d:\my.txt"
+bin\Debug\net8.0\wechat_tools.exe

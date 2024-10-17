@@ -1,4 +1,3 @@
-﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 
@@ -6,7 +5,9 @@ class Start {
     public static void Main(string[] args) {
         Stopwatch watch = new();
         watch.Start();
+
         Trans(new Param().Args(args));
+
         watch.Stop();
         TimeSpan elapsed = watch.Elapsed;
         Console.WriteLine($"转换用时: {elapsed.ToString()}");
