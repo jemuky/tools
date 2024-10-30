@@ -1,14 +1,14 @@
 import Config
 
 # Configure your database
-config :trans_sth, TransSth.Repo,
-  username: "postgres",
-  password: "111110",
-  hostname: "localhost",
-  database: "trans_sth_dev",
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+# config :trans_sth, TransSth.Repo,
+#   username: "postgres",
+#   password: "111110",
+#   hostname: "localhost",
+#   database: "trans_sth_dev",
+#   stacktrace: true,
+#   show_sensitive_data_on_connection_error: true,
+#   pool_size: 10
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

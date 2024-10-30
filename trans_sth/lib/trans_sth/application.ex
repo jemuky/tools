@@ -9,7 +9,7 @@ defmodule TransSth.Application do
   def start(_type, _args) do
     children = [
       TransSthWeb.Telemetry,
-      TransSth.Repo,
+      # TransSth.Repo,
       {DNSCluster, query: Application.get_env(:trans_sth, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: TransSth.PubSub},
       # Start the Finch HTTP client for sending emails

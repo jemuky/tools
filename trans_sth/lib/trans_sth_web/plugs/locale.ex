@@ -1,8 +1,8 @@
-defmodule ChatWeb.Plugs.Locale do
+defmodule TransSthWeb.Plugs.Locale do
   require Logger
   import Plug.Conn
 
-  @locales ["en", "fr", "de"]
+  @locales ["zh", "en", "fr", "de"]
 
   def init(default), do: default
 

@@ -16,7 +16,7 @@ defmodule TransSthWeb.Endpoint do
     longpoll: [connect_info: [session: @session_options]]
   )
 
-  socket("/chat", TransSthWeb.UserSocket,
+  socket("/trans_sth", TransSthWeb.UserSocket,
     websocket: true,
     longpoll: false
   )
