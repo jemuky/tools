@@ -65,8 +65,28 @@ config :trans_sth, TransSthWeb.Endpoint,
 # Enable dev routes for dashboard and mailbox
 config :trans_sth, dev_routes: true
 
+config :logger,
+  backends: [:console, {LoggerFileBackend, :file}]
+
 # Do not include metadata nor timestamps in development logs
-config :logger, :console, format: "[$level] $message\n"
+config :logger, :console, format: "[$level] $time $message\n"
+
+current_time = DateTime.utc_now()
+
+formatted_time =
+  DateTime.to_string(current_time)
+  |> String.split(" ")
+  |> List.first()
+  |> String.replace("-", "")
+  |> String.slice(2..-1)
+
+config :logger, :file,
+  metadata: [:request_id],
+  # 指定日志文件路径
+  path: "log/trans_sth_#{formatted_time}.log",
+  # 设置日志级别
+  level: :debug,
+  format: "[$level] $time $metadata $message\n"
 
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.

@@ -49,6 +49,7 @@ defmodule TransSth.MixProject do
        app: false,
        compile: false,
        depth: 1},
+      {:logger_file_backend, "~> 0.0.10"},
       {:swoosh, "~> 1.5"},
       {:finch, "~> 0.13"},
       {:telemetry_metrics, "~> 1.0"},

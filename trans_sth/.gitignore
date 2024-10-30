@@ -35,3 +35,5 @@ trans_sth-*.tar
 npm-debug.log
 /assets/node_modules/
 
+log
+
