@@ -57,7 +57,10 @@ defmodule TransSth.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      # 添加二维码库
+      {:qrcode, "~> 0.1.5"},
+      {:qrcode_ex, "~> 0.1.1"}
     ]
   end
 
