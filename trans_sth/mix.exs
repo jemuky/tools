@@ -60,7 +60,7 @@ defmodule TransSth.MixProject do
       {:bandit, "~> 1.5"},
       # 添加二维码库
       {:qrcode, "~> 0.1.5"},
-      {:qrcode_ex, "~> 0.1.1"}
+      {:mogrify, "~> 0.9.3"}
     ]
   end
 

@@ -1,19 +1,3 @@
-defmodule BitConverter do
-  import Bitwise
-
-  def to_bits(binary) do
-    binary
-    |> :binary.bin_to_list()
-    |> Enum.flat_map(&byte_to_bits/1)
-  end
-
-  defp byte_to_bits(byte) do
-    for i <- 7..0 do
-      byte >>> i &&& 1
-    end
-  end
-end
-
 defmodule TransSth.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
@@ -47,41 +31,37 @@ defmodule TransSth.Application do
   end
 
   defp after_start() do
-    :timer.sleep(2000)
-
     receive do
       :start ->
+        :timer.sleep(2000)
         address = get_local_ipv4_address()
         show_address(address, 1)
         choose_num = choose(1..length(address))
 
         data = "http://" <> Enum.at(address, choose_num - 1) <> ":4000"
-        qrcode = QRCode.to_png(data)
-        File.write("log/qrcode.png", qrcode)
-        # IO.puts("qrcode: " <> inspect(qrcode))
-        # print_qr_code(BitConverter.to_bits(qrcode))
+        filepath = "log/qrcode.png"
+        QRCode.to_png_file(data, filepath)
+        IO.puts("链接二维码输出到 #{filepath} 成功! ")
+        # qrcode = QRCode.to_png(data)
+        # print_image(qrcode)
+        # qrcode |> inspect() |> IO.puts()
     end
   end
 
-  defp print_qr_code(qr_code) do
-    qr_code
-    |> Enum.each(fn row ->
-      row
-      |> Enum.map(fn
-        # 黑色方块
+  defp print_image(image) do
+    for <<byte::1 <- image>> do
+      case byte do
         1 -> "██"
-        # 空白
-        0 -> "  "
-      end)
-      # 打印每一行
-      |> IO.puts()
-    end)
+        0 -> " "
+      end
+      |> IO.write()
+    end
   end
 
   defp choose(range) do
     option = IO.gets("选择一个ip的序号: ")
     option = option |> String.graphemes() |> hd
-    IO.puts("选择了: <" <> option <> ">")
+    IO.puts("选择了: <#{option}>")
 
     try do
       opt_num = String.to_integer(option)
@@ -94,7 +74,7 @@ defmodule TransSth.Application do
       opt_num
     rescue
       e ->
-        IO.puts("发生错误，重新选择，" <> inspect(e))
+        IO.puts("发生错误，重新选择，#{inspect(e)}")
         choose(range)
     end
   end
