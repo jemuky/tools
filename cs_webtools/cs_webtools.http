@@ -1,6 +1,0 @@
-@cs_webtools_HostAddress = http://localhost:5076
-
-GET {{cs_webtools_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
