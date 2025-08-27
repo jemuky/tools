@@ -1,6 +1,6 @@
 # 用途
 
-使用金钱蓍来摇卦
+摇卦，分为金钱蓍和蓍草
 
 # 用法
 需安装gcc和odin语言环境  
@@ -13,9 +13,12 @@ objcopy --remove-section .drectve rand.o
 # 生成静态库
 ar rcs rdseed.lib rand.o
 
-# odin本体编译
-odin build . -out:金钱蓍.exe
+# 程序本体编译
+odin build . -out:shi.exe
 
 # 执行
-./金钱蓍.exe
+# type可以为0或1, 如 `./shi.exe 0`
+#   0代表使用金钱蓍
+#   1代表使用蓍草
+./shi.exe [type]
 ```

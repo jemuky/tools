@@ -1,3 +1,4 @@
 rand.o
 rdseed.lib
 *.exe
+*.pdb

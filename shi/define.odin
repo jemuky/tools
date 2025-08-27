@@ -1,7 +1,6 @@
 #+feature dynamic-literals
 package main
 
-import "core:fmt"
 import "core:slice"
 import "core:strings"
 
@@ -29,10 +28,10 @@ YinYao :: '\u268B'
 
 // 四象
 SiXiang :: enum {
-	老阴 = 0b000, // 三面 6，可变
-	少阳 = 0b001, // 两面一背 7
-	少阴 = 0b011, // 两背一面 8
-	老阳 = 0b111, // 三背 9，可变
+	老阴 = 0b000, // 三面 6，可变, 交×
+	少阳 = 0b001, // 两面一背 7, 单
+	少阴 = 0b011, // 两背一面 8, 拆
+	老阳 = 0b111, // 三背 9，可变, 重□
 }
 SiXiang_to_string :: proc(s: SiXiang) -> string {
 	switch s {
@@ -56,29 +55,6 @@ SiXiang_arr_to_str :: proc(yaos: ^[6]SiXiang) -> string {
 	}
 	strings.write_byte(&sb, ']')
 	return strings.to_string(sb)
-}
-
-// 检查掷得单次结果
-SiXiang_check :: proc(threeYao: ^[3]bool) -> SiXiang {
-	yangCnt := 0
-	for v in threeYao {
-		if v {
-			yangCnt += 1
-			continue
-		}
-	}
-	switch yangCnt {
-	case 3:
-		return .老阳
-	case 2:
-		return .少阴
-	case 1:
-		return .少阳
-	case 0:
-		return .老阴
-	case:
-		panic(fmt.tprintf("程序错误，不期望的结果({})", yangCnt))
-	}
 }
 
 // 八卦

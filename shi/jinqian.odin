@@ -1,17 +1,14 @@
 package main
 
+import "core:fmt"
 import "core:log"
-import win "core:sys/windows"
+import "core:time"
 
-foreign import rdseed "rdseed.lib"
+/* 
+金钱蓍
+*/
 
-foreign rdseed {
-	true_rand :: proc(_: ^u64) -> bool ---
-}
-
-main :: proc() {
-	context.logger = logger
-
+jinqian :: proc() {
 	yin :: false
 	yang :: true
 
@@ -23,17 +20,44 @@ main :: proc() {
 		tmp: [3]bool = ---
 		for i in 0 ..< 3 {
 			val: u64 = ---
-			for {
-				if true_rand(&val) {
-					val = val % 2
-					break
-				}
+			for !true_rand(&val) {
+				time.sleep(time.Millisecond)
 			}
+			val = val % 2
 			tmp[i] = (val == 0 ? yin : yang)
 		}
 		sixiangs[j] = SiXiang_check(&tmp)
 	}
-	log.infof("生成的象={}", SiXiang_arr_to_str(&sixiangs))
+	// 处理生成的四象
+	handle_from_sixiang(&sixiangs)
+}
+
+// 检查掷得单次结果
+SiXiang_check :: proc(threeYao: ^[3]bool) -> SiXiang {
+	yangCnt := 0
+	for v in threeYao {
+		if v {
+			yangCnt += 1
+			continue
+		}
+	}
+	switch yangCnt {
+	case 3:
+		return .老阳
+	case 2:
+		return .少阴
+	case 1:
+		return .少阳
+	case 0:
+		return .老阴
+	case:
+		panic(fmt.tprintf("程序错误，不期望的结果({})", yangCnt))
+	}
+}
+
+// 处理生成的四象
+handle_from_sixiang :: proc(sixiangs: ^[6]SiXiang) {
+	log.infof("生成的象={}", SiXiang_arr_to_str(sixiangs))
 
 	// 计算本卦、之卦、爻变数
 	benguaYaos: [6]int = ---
@@ -69,28 +93,4 @@ main :: proc() {
 		Gua64(zhiKey),
 		yaoBian,
 	)
-}
-
-// 二进制 [6]int数组转为二进制数字
-sliceToBin :: proc(slice: ^[6]int) -> int {
-	result := 0
-	for i := 5; i >= 0; i -= 1 {
-		result <<= 1
-		result |= slice[i]
-	}
-	return result
-}
-
-logger: log.Logger
-
-@(init, private)
-init :: proc() {
-	win.SetConsoleOutputCP(.UTF8)
-
-	logger = log.create_console_logger()
-}
-
-@(fini, private)
-fini :: proc() {
-	log.destroy_console_logger(logger)
 }
