@@ -87,7 +87,7 @@ handle_from_sixiang :: proc(sixiangs: ^[6]SiXiang) {
 	ben_key := slice_to_bin(&bengua_yaos)
 	bengua := Gua64Map[ben_key]
 	zhi_key := slice_to_bin(&zhigua_yaos)
-	log.infof("benKey={}, bengua_yaos={}, zhikey={}", ben_key, bengua_yaos, zhi_key)
+	// log.infof("benKey={}, bengua_yaos={}, zhikey={}", ben_key, bengua_yaos, zhi_key)
 	zhigua := Gua64Map[zhi_key]
 	log.infof(
 		"本卦={} {}卦, 之卦={} {}卦, 爻变数={}",
