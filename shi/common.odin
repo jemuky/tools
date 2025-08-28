@@ -8,9 +8,9 @@ foreign rdseed {
 }
 
 // 二进制 [6]int数组转为二进制数字
-sliceToBin :: proc(slice: ^[6]int) -> int {
+slice_to_bin :: proc(slice: ^[6]int) -> int {
 	result := 0
-	for i := 5; i >= 0; i -= 1 {
+	for i in 0 ..< 6 {
 		result <<= 1
 		result |= slice[i]
 	}

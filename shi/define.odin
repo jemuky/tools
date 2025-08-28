@@ -1,6 +1,7 @@
 #+feature dynamic-literals
 package main
 
+import "core:log"
 import "core:slice"
 import "core:strings"
 
@@ -55,6 +56,47 @@ SiXiang_arr_to_str :: proc(yaos: ^[6]SiXiang) -> string {
 	}
 	strings.write_byte(&sb, ']')
 	return strings.to_string(sb)
+}
+
+// 处理生成的四象
+handle_from_sixiang :: proc(sixiangs: ^[6]SiXiang) {
+	log.infof("生成的象={}", SiXiang_arr_to_str(sixiangs))
+
+	// 计算本卦、之卦、爻变数
+	bengua_yaos: [6]int = ---
+	zhigua_yaos: [6]int = ---
+	yao_bian := 0
+	for yao, i in sixiangs {
+		switch yao {
+		case .老阳:
+			bengua_yaos[i] = 1
+			zhigua_yaos[i] = 0
+			yao_bian += 1
+		case .少阳:
+			bengua_yaos[i] = 1
+			zhigua_yaos[i] = 1
+		case .少阴:
+			zhigua_yaos[i] = 0
+			bengua_yaos[i] = 0
+		case .老阴:
+			bengua_yaos[i] = 0
+			zhigua_yaos[i] = 1
+			yao_bian += 1
+		}
+	}
+	ben_key := slice_to_bin(&bengua_yaos)
+	bengua := Gua64Map[ben_key]
+	zhi_key := slice_to_bin(&zhigua_yaos)
+	log.infof("benKey={}, bengua_yaos={}, zhikey={}", ben_key, bengua_yaos, zhi_key)
+	zhigua := Gua64Map[zhi_key]
+	log.infof(
+		"本卦={} {}卦, 之卦={} {}卦, 爻变数={}",
+		bengua,
+		Gua64(ben_key),
+		zhigua,
+		Gua64(zhi_key),
+		yao_bian,
+	)
 }
 
 // 八卦
