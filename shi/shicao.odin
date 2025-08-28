@@ -390,8 +390,8 @@ CircleCanister_new :: proc() -> CircleCanister {
 }
 
 CircleCanister_reset :: proc(cc: ^CircleCanister) {
-	if cc.fifty_shicao != nil do free(&cc.fifty_shicao)
-	cc.fifty_shicao = make([dynamic]bool, 50, 50)
+	if cc.fifty_shicao != nil do delete(cc.fifty_shicao)
+	cc.fifty_shicao = make([dynamic]bool, 50)
 	for i in 0 ..< 50 {
 		cc.fifty_shicao[i] = true
 	}
@@ -479,10 +479,10 @@ SquarePlateTrough :: struct {
 	shicao: [dynamic]bool,
 }
 
-// 槽中放置n个
+// 清除原来的，并向槽中放置n个
 SquarePlateTrough_place_n :: proc(spt: ^SquarePlateTrough, n: int) {
-	if spt.shicao != nil do clear(&spt.shicao)
-	spt.shicao = make([dynamic]bool, n, allocator = context.temp_allocator)
+	if spt.shicao != nil do delete(spt.shicao)
+	spt.shicao = make([dynamic]bool, n)
 	for i in 0 ..< n {
 		spt.shicao[i] = true
 	}
